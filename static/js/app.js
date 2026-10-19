@@ -668,7 +668,7 @@ function renderComprehensive(compData) {
     compData.keywords.forEach(kw => {
         const pill = document.createElement("span");
         pill.className = "kw-pill";
-        pill.textContent = `#${kw}`;
+        pill.textContent = `#${kw}`; 
         kwWrap.appendChild(pill);
     });
 
