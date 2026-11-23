@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>월하미호(달빛사주) - 사주명리 만세력 심층 분석</title>
+<meta property="og:title" content="월하미호(달빛사주)">
+<meta property="og:description" content="사주명리 만세력 심층 분석 · 월하미호가 풀어주는 구천운세">
+<meta property="og:image" content="https://dalbit-saju.onrender.com/static/moon.jpg">
+<meta property="og:url" content="https://dalbit-saju.onrender.com">	
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+.hidden{display:none !important}
+.price-info-btn{background:linear-gradient(135deg,#f39c12,#d35400);color:#fff;border:none;padding:10px 20px;font-size:15px;font-weight:bold;border-radius:20px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.3);margin-top:10px;transition:all .3s ease}
+.price-info-btn:hover{transform:translateY(-2px);box-shadow:0 6px 15px rgba(243,156,18,.5)}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.75);z-index:9999;justify-content:center;align-items:center}
+.modal-card{background:#1e222d;border:2px solid #f39c12;border-radius:16px;width:90%;max-width:480px;padding:25px;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #333a4d;padding-bottom:15px;margin-bottom:20px}
+.modal-title{font-size:20px;font-weight:bold;color:#f1c40f}
+.modal-close{background:none;border:none;color:#aaa;font-size:24px;cursor:pointer}
+.info-box{background:#282e3f;border-radius:12px;padding:18px;margin-bottom:15px}
+.info-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:16px}
+.info-label{color:#a0aabe;font-weight:500}.info-value{color:#fff;font-weight:bold;font-size:17px}
+.highlight-account{color:#f39c12;font-size:18px}
+.notice-text{font-size:13px;color:#8a94a6;line-height:1.5;text-align:center;margin-top:15px}
+
+/* ===== 로딩 / 결과 화면 (이 파일 안에서만 쓰는 스타일) ===== */
+#step-loading,#step-result{--r-card:#1b1f3a;--r-line:rgba(255,255,255,.12);--r-muted:#9aa4b8;--r-gold:#f5b942;color:#e8ecf5}
+#step-loading{text-align:center;padding:60px 20px;background:#1b1f3a;border-radius:16px}
+#step-loading .orbit{font-size:56px;animation:spin 3s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+#loading-status-text{margin:22px 0 16px;font-size:15px;color:#cfd6e6;min-height:22px}
+.progress-track{height:8px;background:rgba(255,255,255,.12);border-radius:8px;overflow:hidden;max-width:420px;margin:0 auto}
+#loading-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#f39c12,#f1c40f);transition:width .45s ease}
+
+#step-result{max-width:920px;margin:0 auto;padding:0 4px 40px}
+#step-result .r-card{background:var(--r-card);border:1px solid var(--r-line);border-radius:16px;padding:20px;margin:16px 0}
+#step-result h3{margin:0 0 12px;font-size:18px;color:var(--r-gold)}
+#step-result .muted{color:var(--r-muted);font-size:13px}
+.r-profile{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+#res-day-hanja{font-size:64px;font-weight:800;line-height:1}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.r-badge{background:rgba(245,185,66,.16);color:#f5d58a;border-radius:20px;padding:3px 12px;font-size:13px}
+#res-user-name{margin:0;font-size:22px}
+#res-ilju-title{font-weight:700;font-size:17px}
+#res-ilju-sub{color:var(--r-muted);font-size:14px}
+
+.pl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pl-col{background:#12152b;border:1px solid var(--r-line);border-radius:12px;padding:10px 4px;text-align:center}
+#pl-day{border-color:#f5b942;box-shadow:0 0 0 1px rgba(245,185,66,.4) inset}
+.pl-head{font-size:12px;color:var(--r-muted);margin-bottom:6px}
+.pl-char{font-size:38px;font-weight:800;line-height:1.15}
+.pl-kr{font-size:12px;color:var(--r-muted)}
+.pl-badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;margin:3px 0}
+.pl-tg{font-size:12px;color:#d6dcec;margin:2px 0}
+.pl-sep{height:1px;background:var(--r-line);margin:8px 8px}
+.pl-unsung{font-size:12px;margin-top:4px;color:#f5d58a}
+.pl-hidden{margin-top:8px;font-size:11px;text-align:left;padding:0 6px}
+#step-result .h-item{display:flex;flex-direction:column;border-top:1px dashed var(--r-line);padding:3px 0}
+
+#step-result .elem-bar-row{margin:10px 0}
+#step-result .elem-bar-header{display:flex;justify-content:space-between;flex-wrap:wrap;font-size:13px;margin-bottom:4px;gap:4px}
+#step-result .elem-bar-track{height:10px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden}
+#step-result .elem-bar-fill{height:100%;border-radius:6px}
+.two-split{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+#radar-svg{width:100%;height:auto;max-width:400px;margin:0 auto;display:block}
+.sw-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.sw-pill{background:rgba(255,255,255,.08);padding:5px 12px;border-radius:10px;font-size:14px}
+
+.spectrum{position:relative;height:14px;border-radius:8px;margin:34px 6px 8px;background:linear-gradient(90deg,#3b82f6,#a78bfa,#ef4444)}
+#spectrum-pointer{position:absolute;top:-4px;width:4px;height:22px;background:#fff;border-radius:2px;transform:translateX(-50%)}
+#pointer-score{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-size:12px;white-space:nowrap;background:#fff;color:#111;border-radius:8px;padding:1px 8px}
+.spec-label{display:flex;justify-content:space-between;font-size:12px;color:var(--r-muted);margin:0 6px}
+#res-strength-badge{display:inline-block;font-size:18px;font-weight:800;color:#111;background:#f5b942;border-radius:20px;padding:3px 16px;margin-bottom:8px}
+.factors{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+#step-result .factor-card{background:rgba(0,0,0,.25);border:1px solid var(--r-line);border-radius:12px;padding:10px;text-align:center}
+#step-result .factor-card.achieved{border-color:#22c55e}
+#step-result .factor-name{font-weight:700;font-size:14px}
+#step-result .factor-tag{display:inline-block;font-size:12px;border-radius:10px;padding:1px 10px;margin:5px 0}
+#step-result .factor-tag.yes{background:rgba(34,197,94,.2);color:#86efac}
+#step-result .factor-tag.no{background:rgba(239,68,68,.2);color:#fca5a5}
+#step-result .factor-desc{font-size:11px;color:var(--r-muted)}
+
+.ys-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ys-box{background:rgba(0,0,0,.25);border:1px solid var(--r-line);border-radius:12px;padding:12px}
+.ys-elem{font-size:24px;font-weight:800}
+.lucky-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:14px}
+.lucky-grid b{color:var(--r-gold)}
+
+.daeun-wrap{display:flex;gap:10px;overflow-x:auto;padding:6px 2px 10px;-webkit-overflow-scrolling:touch}
+#step-result .daeun-card{flex:0 0 96px;background:rgba(0,0,0,.25);border:1px solid var(--r-line);border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;position:relative}
+#step-result .daeun-card.active{border-color:#f5b942;background:rgba(245,185,66,.12)}
+#step-result .current-badge{font-size:10px;color:#111;background:#f5b942;border-radius:8px;padding:0 6px;margin-bottom:4px;display:inline-block}
+#step-result .d-age{font-size:12px;color:var(--r-muted)}
+#step-result .d-ganji{font-size:28px;font-weight:800;margin:4px 0}
+#step-result .d-tg{font-size:11px}
+#step-result .d-unsung{font-size:11px;color:#f5d58a}
+
+.seun-top{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+#seun-ganji{font-size:40px;font-weight:800;color:#f5b942}
+.seun-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.seun-grid>div{background:rgba(0,0,0,.25);border:1px solid var(--r-line);border-radius:12px;padding:12px;font-size:14px;line-height:1.6}
+.seun-grid b{display:block;color:var(--r-gold);margin-bottom:4px}
+#step-result .kw-pill{display:inline-block;background:rgba(245,185,66,.16);color:#f5d58a;border-radius:20px;padding:3px 12px;margin:0 6px 6px 0;font-size:13px}
+#res-life-advice,#res-recommendation,#seun-overall,#res-elem-desc,#res-strength-desc,#y-primary-reason,#y-johu-desc{line-height:1.7;font-size:14.5px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.btn-sub{background:rgba(255,255,255,.1);color:#fff;border:1px solid var(--r-line);border-radius:12px;padding:12px 20px;font-size:15px;cursor:pointer}
+.btn-main{background:linear-gradient(135deg,#f39c12,#d35400);color:#fff;border:0;border-radius:12px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer}
+#json-modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center}
+#json-modal .jm-box{background:#1e222d;border-radius:14px;width:92%;max-width:720px;max-height:85vh;display:flex;flex-direction:column;padding:16px;color:#fff}
+#json-code-view{overflow:auto;background:#0f1117;border-radius:8px;padding:12px;font-size:12px;flex:1;white-space:pre-wrap}
+.checkline{display:flex;align-items:center;gap:8px;margin:8px 0 14px;font-size:14px}
+@media(max-width:560px){
+ .two-split,.ys-grid,.seun-grid,.lucky-grid{grid-template-columns:1fr}
+ .factors{grid-template-columns:1fr}
+ .pl-char{font-size:30px}
+ #res-day-hanja{font-size:52px}
+}
+</style>
+</head>
+<body>
+<div class="stars-bg"></div>
+<div class="glow-orb orb-1"></div>
+<div class="glow-orb orb-2"></div>
+
+<div class="app-container">
+  <header class="app-header">
+    <div class="logo-badge"><span class="logo-symbol">☯</span><span class="logo-text">천문 정밀 만세력</span></div>
+    <h1 class="main-title">사주팔자 심층 분석 엔진</h1>
+    <p class="sub-title">Jean Meeus 천문 절기 알고리즘 기반 · 억부/조후 용신 및 대운·세운 종합 감정</p>
+    <button class="price-info-btn" onclick="openAccountModal()">💳 이용 요금 및 계좌 안내</button>
+  </header>
+
+  <!-- 1단계: 입력 -->
+  <section id="step-input" class="step-card active">
+    <div class="card-inner">
+      <div class="card-header">
+        <h2>사주 명식 입력</h2>
+        <p>정확한 만세력 산출을 위해 생년월일과 태어난 시간을 입력해 주세요.</p>
+      </div>
+      <form id="saju-form" onsubmit="handleAnalyzeSubmit(event)">
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="user-name">이름 (선택)</label>
+            <input type="text" id="user-name" placeholder="홍길동" maxlength="10">
+          </div>
+          <div class="form-group">
+            <label>성별 <span class="required">*</span></label>
+            <div class="gender-toggle">
+              <label class="gender-btn active"><input type="radio" name="gender" value="male" checked onchange="syncActive('gender')"><span>남성 (乾命)</span></label>
+              <label class="gender-btn"><input type="radio" name="gender" value="female" onchange="syncActive('gender')"><span>여성 (坤命)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>양력 / 음력 구분</label>
+          <div class="calendar-toggle calendar-type-selector">
+            <label class="cal-btn tab-btn active"><input type="radio" name="cal_type" value="solar" checked onchange="toggleCalType()"><span>양력 (Solar)</span></label>
+            <label class="cal-btn tab-btn"><input type="radio" name="cal_type" value="lunar" onchange="toggleCalType()"><span>음력 (Lunar)</span></label>
+          </div>
+          <div id="leap-month-box" class="hidden checkline">
+            <input type="checkbox" id="is-leap-month"><label for="is-leap-month">윤달입니다</label>
+          </div>
+        </div>
+
+        <div class="form-row three-col">
+          <div class="form-group"><label for="birth-year">출생년도 <span class="required">*</span></label><select id="birth-year" required></select></div>
+          <div class="form-group"><label for="birth-month">월 <span class="required">*</span></label><select id="birth-month" required></select></div>
+          <div class="form-group"><label for="birth-day">일 <span class="required">*</span></label><select id="birth-day" required></select></div>
+        </div>
+
+        <div class="form-row two-col" id="time-inputs">
+          <div class="form-group"><label for="birth-hour">출생 시간 <span class="required">*</span></label><select id="birth-hour"></select></div>
+          <div class="form-group"><label for="birth-minute">분 <span class="required">*</span></label><select id="birth-minute"></select></div>
+        </div>
+        <div class="checkline">
+          <input type="checkbox" id="unknown-time" onchange="toggleUnknownTime()"><label for="unknown-time">태어난 시간을 몰라요</label>
+        </div>
+
+        <button type="submit" class="submit-btn"><span>사주 분석 시작하기</span><span class="btn-icon">→</span></button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 2단계: 로딩 -->
+  <section id="step-loading" class="hidden">
+    <div class="orbit">☯</div>
+    <div id="loading-status-text">분석 준비 중...</div>
+    <div class="progress-track"><div id="loading-progress-fill"></div></div>
+  </section>
+
+  <!-- 3단계: 결과 -->
+  <section id="step-result" class="hidden">
+    <div class="r-card">
+      <div class="r-profile">
+        <div id="res-day-hanja">-</div>
+        <div>
+          <h2 id="res-user-name">-</h2>
+          <div class="badge-row"><span class="r-badge" id="res-gender-badge"></span><span class="r-badge" id="res-age-badge"></span></div>
+          <div id="res-ilju-title"></div>
+          <div id="res-ilju-sub"></div>
+        </div>
+      </div>
+      <div class="muted" style="margin-top:12px;line-height:1.7">
+        <div id="res-solar-dt"></div><div id="res-lunar-dt"></div>
+        <div id="res-prev-term"></div><div id="res-next-term"></div>
+      </div>
+    </div>
+
+    <div class="r-card">
+      <h3>사주 원국 (四柱八字)</h3>
+      <div class="pl-grid">
+<div class="pl-col" id="pl-hour">
+  <div class="pl-head">시주 時</div>
+  <div class="pl-tg" id="p-hour-gan-tg">-</div>
+  <div class="pl-char" id="p-hour-gan">-</div>
+  <div class="pl-kr" id="p-hour-gan-kr">-</div>
+  <span class="pl-badge" id="p-hour-gan-elem">-</span>
+  <div class="pl-sep"></div>
+  <div class="pl-char" id="p-hour-ji">-</div>
+  <div class="pl-kr" id="p-hour-ji-kr">-</div>
+  <span class="pl-badge" id="p-hour-ji-elem">-</span>
+  <div class="pl-tg" id="p-hour-ji-tg">-</div>
+  <div class="pl-unsung" id="p-hour-unsung">-</div>
+  <div class="pl-hidden" id="p-hour-hidden-list"></div>
+</div>
+<div class="pl-col" id="pl-day">
+  <div class="pl-head">일주 日</div>
+  <div class="pl-tg" id="p-day-gan-tg">-</div>
+  <div class="pl-char" id="p-day-gan">-</div>
+  <div class="pl-kr" id="p-day-gan-kr">-</div>
+  <span class="pl-badge" id="p-day-gan-elem">-</span>
+  <div class="pl-sep"></div>
+  <div class="pl-char" id="p-day-ji">-</div>
+  <div class="pl-kr" id="p-day-ji-kr">-</div>
+  <span class="pl-badge" id="p-day-ji-elem">-</span>
+  <div class="pl-tg" id="p-day-ji-tg">-</div>
+  <div class="pl-unsung" id="p-day-unsung">-</div>
+  <div class="pl-hidden" id="p-day-hidden-list"></div>
+</div>
+<div class="pl-col" id="pl-month">
+  <div class="pl-head">월주 月</div>
+  <div class="pl-tg" id="p-month-gan-tg">-</div>
+  <div class="pl-char" id="p-month-gan">-</div>
+  <div class="pl-kr" id="p-month-gan-kr">-</div>
+  <span class="pl-badge" id="p-month-gan-elem">-</span>
+  <div class="pl-sep"></div>
+  <div class="pl-char" id="p-month-ji">-</div>
+  <div class="pl-kr" id="p-month-ji-kr">-</div>
+  <span class="pl-badge" id="p-month-ji-elem">-</span>
+  <div class="pl-tg" id="p-month-ji-tg">-</div>
+  <div class="pl-unsung" id="p-month-unsung">-</div>
+  <div class="pl-hidden" id="p-month-hidden-list"></div>
+</div>
+<div class="pl-col" id="pl-year">
+  <div class="pl-head">년주 年</div>
+  <div class="pl-tg" id="p-year-gan-tg">-</div>
+  <div class="pl-char" id="p-year-gan">-</div>
+  <div class="pl-kr" id="p-year-gan-kr">-</div>
+  <span class="pl-badge" id="p-year-gan-elem">-</span>
+  <div class="pl-sep"></div>
+  <div class="pl-char" id="p-year-ji">-</div>
+  <div class="pl-kr" id="p-year-ji-kr">-</div>
+  <span class="pl-badge" id="p-year-ji-elem">-</span>
+  <div class="pl-tg" id="p-year-ji-tg">-</div>
+  <div class="pl-unsung" id="p-year-unsung">-</div>
+  <div class="pl-hidden" id="p-year-hidden-list"></div>
+</div>
+      </div>
+    </div>
+
+    <div class="r-card">
+      <h3>오행 분포</h3>
+      <div class="sw-row"><span class="sw-pill">가장 강한 기운: <b id="res-strongest-elem">-</b></span><span class="sw-pill">가장 약한 기운: <b id="res-weakest-elem">-</b></span></div>
+      <p id="res-elem-desc"></p>
+      <div class="two-split">
+        <div id="element-bars"></div>
+        <svg id="radar-svg" viewBox="0 0 400 370"></svg>
+      </div>
+    </div>
+
+    <div class="r-card">
+      <h3>신강 · 신약</h3>
+      <div id="res-strength-badge">-</div>
+      <p id="res-strength-desc"></p>
+      <div class="spectrum"><div id="spectrum-pointer" style="left:50%"><span id="pointer-score"></span></div></div>
+      <div class="spec-label"><span>신약</span><span>중화</span><span>신강</span></div>
+      <div class="factors" id="factors-grid"></div>
+    </div>
+
+    <div class="r-card">
+      <h3>용신 · 희신 · 개운</h3>
+      <div class="ys-grid">
+        <div class="ys-box"><div class="muted">용신(用神)</div><div class="ys-elem" id="y-primary-elem">-</div><div id="y-primary-type"></div><p id="y-primary-reason"></p></div>
+        <div class="ys-box"><div class="muted">희신(喜神)</div><div class="ys-elem" id="y-secondary-elem">-</div><div id="y-secondary-type"></div></div>
+      </div>
+      <p><b style="color:#f5b942">조후:</b> <span id="y-johu-desc"></span></p>
+      <p><b style="color:#f5b942">기신:</b> <span id="y-harmful-elem"></span></p>
+      <div class="lucky-grid">
+        <div><b>행운의 색</b> <span id="lucky-colors"></span></div>
+        <div><b>행운의 숫자</b> <span id="lucky-numbers"></span></div>
+        <div><b>행운의 방향</b> <span id="lucky-dirs"></span></div>
+        <div><b>행운의 소품</b> <span id="lucky-items"></span></div>
+      </div>
+    </div>
+
+    <div class="r-card">
+      <h3>10년 대운</h3>
+      <div class="muted" id="daeun-summary-info"></div>
+      <div class="daeun-wrap" id="daeun-timeline"></div>
+      <div class="muted">카드를 누르면 해설이 나와요.</div>
+    </div>
+
+    <div class="r-card">
+      <h3 id="seun-title-year">올해 운세</h3>
+      <div class="seun-top"><div id="seun-ganji">-</div><div><div id="seun-kr"></div><div class="muted" id="seun-tg-tag"></div></div></div>
+      <p id="seun-overall"></p>
+      <div class="seun-grid">
+        <div><b>💰 재물운</b><span id="seun-wealth"></span></div>
+        <div><b>💼 직업·학업운</b><span id="seun-career"></span></div>
+        <div><b>🤝 인간관계</b><span id="seun-relation"></span></div>
+        <div><b>🌿 건강</b><span id="seun-health"></span></div>
+      </div>
+    </div>
+
+    <div class="r-card">
+      <h3>종합 풀이</h3>
+      <div id="res-keywords"></div>
+      <p id="res-life-advice"></p>
+      <p id="res-recommendation"></p>
+    </div>
+    
+<div class="r-card" id="lc-card">
+  <h3>💘 연애운 · 궁합</h3>
+  <div class="muted" style="margin-bottom:10px">재미로 보는 참고용 풀이예요 (일간 기준).</div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <b>내 일간</b>
+    <select id="lc-me"></select>
+    <select id="lc-gender">
+      <option value="남">남성</option>
+      <option value="여">여성</option>
+    </select>
+    <button class="btn-sub" onclick="lcLove()">오늘의 연애운</button>
+  </div>
+  <p id="lc-love-out" style="margin-top:10px"></p>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px">
+    <b>상대 일간</b>
+    <select id="lc-other"></select>
+    <button class="btn-sub" onclick="lcCompat()">궁합 보기</button>
+  </div>
+  <p id="lc-compat-out" style="margin-top:10px"></p>
+</div>
+
+<script>
+(function () {
+  var STEMS = "갑을병정무기경신임계".split("");
+  ["lc-me", "lc-other"].forEach(function (id) {
+    var sel = document.getElementById(id);
+    STEMS.forEach(function (s) {
+      var o = document.createElement("option");
+      o.value = s; o.textContent = s;
+      sel.appendChild(o);
+    });
+  });
+  function post(url, body) {
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json(); });
+  }
+  function stars(n) { return "★".repeat(n) + "☆".repeat(5 - n); }
+
+  window.lcLove = function () {
+    var out = document.getElementById("lc-love-out");
+    out.textContent = "불러오는 중...";
+    post("/api/love", {
+      day_stem: document.getElementById("lc-me").value,
+      gender: document.getElementById("lc-gender").value
+    }).then(function (d) {
+      out.textContent = d.error ? d.error :
+        d.date + " · 오늘의 기운: " + d.ten_god + " · 연애운 " + stars(d.stars);
+    }).catch(function () { out.textContent = "오류가 발생했습니다."; });
+  };
+
+  window.lcCompat = function () {
+    var out = document.getElementById("lc-compat-out");
+    out.textContent = "불러오는 중...";
+    post("/api/compat", {
+      stem_a: document.getElementById("lc-me").value,
+      stem_b: document.getElementById("lc-other").value
+    }).then(function (d) {
+      out.textContent = d.error ? d.error :
+        d.a + "와 " + d.b + " · 궁합 " + d.score + "점 · " +
+        d.element_relation + (d.stem_hap ? " · 천간합(좋은 인연의 기운)" : "");
+    }).catch(function () { out.textContent = "오류가 발생했습니다."; });
+  };
+})();
+</script>
+
+<div class="btn-row">
+      <button class="btn-main" onclick="goToInput()">다시 분석하기</button>
+      <button class="btn-sub" onclick="openJsonModal()">분석 데이터 보기</button>
+      <button class="btn-sub" onclick="downloadJsonFile()">내려받기</button>
+    </div>
+  </section>
+
+  <div class="info-box" style="margin-top:30px;text-align:center;padding:20px;border-radius:12px;background-color:#f8f9fa;border:1px solid #e9ecef;">
+    <h3 style="margin-bottom:10px;color:#1a237e;font-size:18px;">🌙 달빛사주 자율 복채 안내</h3>
+    <p style="color:#555;font-size:14px;line-height:1.6;margin-bottom:15px;">
+      달빛사주 풀이가 마음에 와닿으셨나요?<br>여러분의 따뜻한 후원과 마음은 서비스 운영과 발전에 큰 힘이 됩니다.
+    </p>
+    <div style="font-weight:bold;font-size:16px;color:#222;">신한은행 <span style="color:#0056b3;">110648174813</span> (예금주: 고*안)</div>
+  </div>
+
+  <p style="font-size:13px;color:#777;margin-top:10px;text-align:center;">
+    ※ 문의사항이나 응원 메시지는 <strong>월하미호사주(달빛사주) 카카오톡 오픈채팅</strong>으로 편하게 남겨주세요.
+  </p>
+  <div style="text-align:center;margin-top:8px;">
+    <a href="https://open.kakao.com/o/sKh9VVQi" target="_blank" style="display:inline-block;padding:8px 16px;background-color:#FEE500;color:#000;text-decoration:none;border-radius:5px;font-weight:bold;font-size:14px;">💬 카카오톡 오픈채팅 문의하기</a>
+  </div>
+</div>
+
+<!-- 요금/계좌 안내 창 -->
+<div class="modal-overlay" id="accountModal" onclick="if(event.target===this)closeAccountModal()">
+  <div class="modal-card">
+    <div class="modal-header"><span class="modal-title">💳 이용 요금 및 계좌 안내</span><button class="modal-close" onclick="closeAccountModal()">×</button></div>
+    <div class="info-box">
+      <div class="info-row"><span class="info-label">은행</span><span class="info-value">신한은행</span></div>
+      <div class="info-row"><span class="info-label">계좌번호</span><span class="info-value highlight-account">110648174813</span></div>
+      <div class="info-row"><span class="info-label">예금주</span><span class="info-value">고*안</span></div>
+    </div>
+    <div class="notice-text">입금 후 카카오톡 오픈채팅으로 알려 주세요.</div>
+  </div>
+</div>
+
+<!-- JSON 보기 창 -->
+<div id="json-modal" class="hidden" onclick="closeJsonModal(event)">
+  <div class="jm-box">
+    <div style="display:flex;justify-content:space-between;margin-bottom:10px"><b>분석 데이터</b><button class="modal-close modal-close-btn" onclick="closeJsonModal(event)">×</button></div>
+    <pre id="json-code-view"></pre>
+    <div class="btn-row"><button class="btn-sub" onclick="copyJsonToClipboard()">복사</button><button class="btn-sub" onclick="downloadJsonFile()">내려받기</button></div>
+  </div>
+</div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
